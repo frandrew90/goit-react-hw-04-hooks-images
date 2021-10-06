@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const ImageGalleryItem = ({ image, largeImg, onPictureOpen }) => {
-  // console.log('GalItem', image);
-  // console.log('GalItemFunc', onPictureOpen);
   return (
     <li
       className="ImageGalleryItem"

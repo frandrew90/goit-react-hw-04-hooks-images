@@ -21,14 +21,10 @@ class App extends Component {
     if (prevState.find !== this.state.find) {
       this.setState({
         gallery: [],
-        // page: 1,
       });
       this.makeGallery();
       return;
     }
-    // if (prevState.find === this.state.find) {
-    //   this.makeGallery();
-    // }
   }
 
   makeGallery = () => {
@@ -37,7 +33,7 @@ class App extends Component {
 
     getPhoto(find, page)
       .then(({ hits, total }) => {
-        console.log('hit', hits);
+        // console.log('hit', hits);
         this.setState(prevState => ({
           gallery: [...prevState.gallery, ...hits],
           page: prevState.page + 1,
@@ -46,7 +42,7 @@ class App extends Component {
         if (page !== 1) {
           this.scroll();
         }
-        console.log('state', this.state.gallery);
+        // console.log('state', this.state.gallery);
         if (total === 0) {
           alert('There are no pictures');
         }
@@ -57,7 +53,6 @@ class App extends Component {
 
   onFormSubmit = find => {
     this.setState({ find, page: 1 });
-    // this.makeGallery();
   };
 
   scroll = () => {
@@ -82,10 +77,6 @@ class App extends Component {
     this.toggleModal();
   };
 
-  // onLoadMore = () => {
-  //   this.setState(prevState => ({ page: prevState.page + 1 }));
-  // };
-
   render() {
     const { gallery, showModal, largeImageURL, isLoading, total } = this.state;
 
@@ -93,7 +84,7 @@ class App extends Component {
       <>
         <Searchbar onSubmit={this.onFormSubmit} />
 
-        {console.log('render', gallery)}
+        {/* {console.log('render', gallery)} */}
         {gallery.length !== 0 && (
           <ImageGallery gallery={gallery} onPictureOpen={this.onPictureOpen} />
         )}

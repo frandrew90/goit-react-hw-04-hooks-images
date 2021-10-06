@@ -3,7 +3,7 @@ import ImageGalleryItem from '../imageGalleryItem/ImageGalleryItem';
 import PropTypes from 'prop-types';
 
 const ImageGallery = ({ gallery, onPictureOpen }) => {
-  console.log('ImgG', gallery);
+  // console.log('ImgG', gallery);
 
   return (
     <ul className="ImageGallery">
@@ -15,14 +15,6 @@ const ImageGallery = ({ gallery, onPictureOpen }) => {
           onPictureOpen={onPictureOpen}
         />
       ))}
-
-      {/* {gallery.map(image => (
-        <ImageGalleryItem
-          key={image.id}
-          image={image}
-          onPictureOpen={onPictureOpen}
-        />
-      ))} */}
     </ul>
   );
 };

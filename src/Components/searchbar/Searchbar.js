@@ -1,49 +1,85 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-class Searchbar extends Component {
-  state = {
-    find: '',
-  };
+const initialState = {
+  find: '',
+};
 
-  handleSearchForm = e => {
+const Searchbar = ({ onSubmit }) => {
+  const [state, setState] = useState(initialState);
+
+  const handleSearchForm = e => {
     e.preventDefault();
-    this.props.onSubmit(this.state.find);
-    this.setState({ find: '' });
+    onSubmit(state.find);
+    setState({ find: '' });
   };
 
-  handleInputChange = e => {
-    this.setState({ find: e.target.value });
+  const handleInputChange = e => {
+    setState({ find: e.target.value });
   };
 
-  render() {
-    return (
-      <header className="Searchbar">
-        <form className="SearchForm" onSubmit={this.handleSearchForm}>
-          <button
-            type="submit"
-            className="SearchForm-button"
-            // onSubmit={this.handleSearchForm}
-          >
-            <span className="SearchForm-button-label">Search</span>
-          </button>
+  return (
+    <header className="Searchbar">
+      <form className="SearchForm" onSubmit={handleSearchForm}>
+        <button type="submit" className="SearchForm-button">
+          <span className="SearchForm-button-label">Search</span>
+        </button>
 
-          <input
-            className="SearchForm-input"
-            type="text"
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-            onChange={this.handleInputChange}
-            value={this.state.find}
-          />
-        </form>
-      </header>
-    );
-  }
-}
+        <input
+          className="SearchForm-input"
+          type="text"
+          autoComplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+          onChange={handleInputChange}
+          value={state.find}
+        />
+      </form>
+    </header>
+  );
+};
 
 export default Searchbar;
+
+// class Searchbar extends Component {
+//   state = {
+//     find: '',
+//   };
+
+//   handleSearchForm = e => {
+//     e.preventDefault();
+//     props.onSubmit(state.find);
+//     setState({ find: '' });
+//   };
+
+//   handleInputChange = e => {
+//     setState({ find: e.target.value });
+//   };
+
+//   render() {
+//     return (
+//       <header className="Searchbar">
+//         <form className="SearchForm" onSubmit={handleSearchForm}>
+//           <button type="submit" className="SearchForm-button">
+//             <span className="SearchForm-button-label">Search</span>
+//           </button>
+
+//           <input
+//             className="SearchForm-input"
+//             type="text"
+//             autoComplete="off"
+//             autoFocus
+//             placeholder="Search images and photos"
+//             onChange={handleInputChange}
+//             value={state.find}
+//           />
+//         </form>
+//       </header>
+//     );
+//   }
+// }
+
+// export default Searchbar;
 
 Searchbar.propTypes = {
   onSubmit: PropTypes.func.isRequired,

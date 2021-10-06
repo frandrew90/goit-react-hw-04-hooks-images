@@ -1,4 +1,3 @@
-// import React, { Component } from 'react';
 import axios from 'axios';
 
 const BASE_URL = 'https://pixabay.com/api/';
@@ -11,19 +10,3 @@ export const getPhoto = (findPicture, page = 1) => {
     )
     .then(res => res.data);
 };
-
-//     class ApiServices extends Component {
-//   state = {};
-
-//   componentDidMount() {
-//     fetch(
-//       'https://pixabay.com/api/?q=что_искать&page=номер_страницы&key=твой_ключ&image_type=photo&orientation=horizontal&per_page=12',
-//     );
-//   }
-
-//   render() {
-//     return <h2>hello</h2>;
-//   }
-// };
-
-// export default ApiServices;
