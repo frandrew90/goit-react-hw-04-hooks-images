@@ -6,16 +6,16 @@ import PropTypes from 'prop-types';
 // };
 
 const Searchbar = ({ onSubmit }) => {
-  const [state, setState] = useState('');
+  const [find, setFind] = useState('');
 
   const handleSearchForm = e => {
     e.preventDefault();
-    onSubmit(state);
-    setState('');
+    onSubmit(find);
+    setFind('');
   };
 
   const handleInputChange = e => {
-    setState(e.target.value);
+    setFind(e.target.value);
   };
 
   return (
@@ -32,7 +32,7 @@ const Searchbar = ({ onSubmit }) => {
           autoFocus
           placeholder="Search images and photos"
           onChange={handleInputChange}
-          value={state}
+          value={find}
         />
       </form>
     </header>
