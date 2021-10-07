@@ -6,32 +6,35 @@ import Modal from './modal/Modal';
 import Button from './button/Button';
 import Loader from './loader/Loader';
 
-const initialState = {
-  find: '',
-  gallery: [],
-  page: 1,
-  total: 0,
-  largeImageURL: {},
-  showModal: false,
-  isLoading: false,
-};
+// const initialState = {
+//   find: '',
+//   gallery: [],
+//   page: 1,
+//   total: 0,
+//   largeImageURL: {},
+//   showModal: false,
+//   isLoading: false,
+// };
 
 const App = () => {
-  const [state, setState] = useState(initialState);
+  const [find, setFind] = useState('');
+  const [gallery, setGallery] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
+  const [largeImageURL, setLargeImageURL] = useState({});
+  const [showModal, setShowModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (!state.find) {
+    if (!find) {
       return;
     }
 
-    setState(prevState => ({
-      ...prevState,
-      gallery: [],
-    }));
+    setGallery([]);
     makeGallery();
 
     // eslint-disable-next-line
-  }, [state.find]);
+  }, [find]);
 
   // componentDidUpdate(prevProps, prevState) {
   //   if (prevState.find !== state.find) {
@@ -44,34 +47,45 @@ const App = () => {
   // }
 
   const makeGallery = () => {
-    const { find, page } = state;
-    setState(prevState => ({ ...prevState, isLoading: true }));
+    // const { find, page } = state;
+    setIsLoading(true);
+    // console.log('IsLoading', isLoading);
+    // setState(prevState => ({ ...prevState, isLoading: true }));
 
     getPhoto(find, page)
       .then(({ hits, total }) => {
         // console.log('hit', hits);
-        setState(prevState => ({
-          ...prevState,
-          gallery: [...prevState.gallery, ...hits],
-          page: prevState.page + 1,
-          total,
-        }));
+        // setIsLoading(true);
+
+        setGallery([...gallery, ...hits]);
+        setPage(page + 1);
+        setTotalItems(total);
+        console.log(totalItems);
+        // setState(prevState => ({
+        //   ...prevState,
+        //   gallery: [...prevState.gallery, ...hits],
+        //   page: prevState.page + 1,
+        //   total,
+        // }));
         if (page !== 1) {
           scroll();
         }
-        // console.log('state', state.gallery);
-        if (total === 0) {
+        if (hits.length === 0) {
           alert('There are no pictures');
         }
+        // console.log('state', state.gallery);
       })
       .catch(error => alert(error.message))
-      .finally(() =>
-        setState(prevState => ({ ...prevState, isLoading: false })),
-      );
+      .finally(() => setIsLoading(false));
+    // console.log('FinLoading', isLoading);
   };
 
   const onFormSubmit = find => {
-    setState(prevState => ({ ...prevState, find, page: 1 }));
+    setGallery([]);
+    setFind(find);
+    setPage(1);
+    // setIsLoading(true);
+    // setState(prevState => ({ ...prevState, find, page: 1 }));
   };
 
   const scroll = () => {
@@ -82,19 +96,22 @@ const App = () => {
   };
 
   const toggleModal = () => {
-    setState(prev => ({ ...prev, showModal: !prev.showModal }));
+    // setState(prev => ({ ...prev, showModal: !prev.showModal }));
+    setShowModal(!showModal);
   };
 
   const showBtnLoadMore = () => {
-    return Math.ceil(state.total / 12) !== state.page - 1;
+    // return Math.ceil(state.total / 12) !== state.page - 1;
+    return Math.ceil(totalItems / 12) !== page - 1;
   };
 
   const onPictureOpen = largeImage => {
-    setState(prevState => ({ ...prevState, largeImageURL: largeImage }));
+    // setState(prevState => ({ ...prevState, largeImageURL: largeImage }));
+    setLargeImageURL(largeImage);
     toggleModal();
   };
 
-  const { gallery, showModal, largeImageURL, isLoading, total } = state;
+  // const { gallery, showModal, largeImageURL, isLoading, total } = state;
 
   return (
     <>
@@ -106,7 +123,9 @@ const App = () => {
       )}
       {showModal && <Modal onClose={toggleModal} largeImage={largeImageURL} />}
       {isLoading && <Loader />}
-      {showBtnLoadMore() && total !== 0 && <Button getPhoto={makeGallery} />}
+      {showBtnLoadMore() && totalItems !== 0 && (
+        <Button getPhoto={makeGallery} />
+      )}
     </>
   );
 };
