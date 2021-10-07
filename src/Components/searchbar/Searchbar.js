@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-const initialState = {
-  find: '',
-};
+// const initialState = {
+//   find: '',
+// };
 
 const Searchbar = ({ onSubmit }) => {
-  const [state, setState] = useState(initialState);
+  const [state, setState] = useState('');
 
   const handleSearchForm = e => {
     e.preventDefault();
-    onSubmit(state.find);
-    setState({ find: '' });
+    onSubmit(state);
+    setState('');
   };
 
   const handleInputChange = e => {
-    setState({ find: e.target.value });
+    setState(e.target.value);
   };
 
   return (
@@ -32,7 +32,7 @@ const Searchbar = ({ onSubmit }) => {
           autoFocus
           placeholder="Search images and photos"
           onChange={handleInputChange}
-          value={state.find}
+          value={state}
         />
       </form>
     </header>
